@@ -4,17 +4,20 @@ import os
 @op
 def ingest():
     os.system("python pipeline/ingest.py")
+    return True
 
 @op
-def validate():
+def validate(_input):
     os.system("python pipeline/validate.py")
+    return True
 
 @op
-def transform():
+def transform(_input):
     os.system("cd dbt_pipeline && dbt run --profiles-dir .")
+    return True
 
 @op
-def test_data():
+def test_data(_input):
     os.system("cd dbt_pipeline && dbt test --profiles-dir .")
 
 @job
