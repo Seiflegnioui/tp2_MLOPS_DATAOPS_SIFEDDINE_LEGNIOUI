@@ -21,3 +21,15 @@ jobs:
       - name: Syntax check
         run: |
           python -m py_compile pipeline/ingest.py pipeline/validate.py pipeline/orchestrate.py
+      - name: Run ingestion
+        run: python pipeline/ingest.py
+      - name: Run validation
+        run: python pipeline/validate.py
+      - name: Run dbt models
+        run: |
+          cd dbt_pipeline
+          dbt run --profiles-dir .
+      - name: Run dbt tests
+        run: |
+          cd dbt_pipeline
+          dbt test --profiles-dir .
